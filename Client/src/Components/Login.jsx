@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Hook para redirigir
 
   const handleLogin = (e) => {
     e.preventDefault();
     // Aquí puedes manejar la lógica de login, por ejemplo, haciendo una petición al backend
     console.log('Email:', email);
     console.log('Password:', password);
+  };
+
+  const handleRegisterRedirect = () => {
+    navigate('/register');
   };
 
   return (
@@ -40,7 +46,10 @@ function Login() {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary w-100">Login</button>
+            <button type="submit" className="btn btn-primary w-100 mb-2">Login</button>
+            <button type="button" className="btn btn-secondary w-100" onClick={handleRegisterRedirect}>
+              Create an account
+            </button>
           </form>
         </div>
       </div>
