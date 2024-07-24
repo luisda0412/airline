@@ -5,8 +5,13 @@ import { useNavigate } from 'react-router-dom';
 const Register = () => {
   const [formData, setFormData] = useState({
     username: '',
+    password: '',
+    name: '',
+    lastname: '',
     email: '',
-    password: ''
+    birthdate: '',
+    direction: '',
+    phone: ''
   });
   const navigate = useNavigate(); // Hook para redirigir
 
@@ -57,13 +62,73 @@ const Register = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
+          <label htmlFor="password" className="form-label">Contraseña</label>
           <input
             type="password"
             className="form-control"
             id="password"
             name="password"
             value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">Nombre</label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="lastname" className="form-label">Apellidos</label>
+          <input
+            type="text"
+            className="form-control"
+            id="lastname"
+            name="lastname"
+            value={formData.lastname}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="birthname" className="form-label">Fecha de Nacimiento</label>
+          <input
+            type="date"
+            className="form-control"
+            id="birthname"
+            name="birthname"
+            value={formData.birthdate}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="direction" className="form-label">Dirección</label>
+          <input
+            type="date"
+            className="form-control"
+            id="direction"
+            name="direction"
+            value={formData.direction}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="direction" className="form-label">Telefono</label>
+          <input
+            type="text"
+            className="form-control"
+            id="phone"
+            name="phone"
+            value={formData.phone}
             onChange={handleChange}
             required
           />

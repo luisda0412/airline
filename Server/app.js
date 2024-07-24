@@ -22,9 +22,9 @@ const User = mongoose.model('User', userSchema);
 
 // Ruta para el registro
 app.post('/api/register', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, password, name, lastname, email, birthdate, direction, phone} = req.body;
 
-  const newUser = new User({ username, email, password });
+  const newUser = new User({ username, password, name, lastname, email, birthdate, direction, phone });
 
   try {
     const savedUser = await newUser.save();
