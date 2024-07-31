@@ -1,28 +1,39 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors'); // Importa el paquete CORS
 require('dotenv').config();
 
 const app = express();
 
+// Middleware para parsear JSON
+app.use(cors()); // Habilita CORS para todas las rutas
+app.use(express.json());
+
 // Conectar a MongoDB
 mongoose.connect(process.env.MONGO_URI, {
-  // Estas opciones ya no son necesarias con la versión actual del controlador
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
   .then(() => console.log('MongoDB conectado'))
   .catch((err) => console.error('Error al conectar a MongoDB', err));
 
-  // Modelo de Usuario
+// Modelo de Usuario
 const userSchema = new mongoose.Schema({
   username: String,
+  password: String,
+  name: String,
+  lastname: String,
   email: String,
-  password: String
+  birthdate: Date,
+  direction: String,
+  phone: String
 });
 
 const User = mongoose.model('User', userSchema);
 
 // Ruta para el registro
 app.post('/api/register', async (req, res) => {
-  const { username, password, name, lastname, email, birthdate, direction, phone} = req.body;
+  const { username, password, name, lastname, email, birthdate, direction, phone } = req.body;
 
   const newUser = new User({ username, password, name, lastname, email, birthdate, direction, phone });
 

@@ -25,6 +25,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      debugger
       const response = await axios.post('http://localhost:3000/api/register', formData);
       console.log(response.data);
       navigate('/'); // Redirige al componente de inicio de sesión
@@ -98,12 +99,12 @@ const Register = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="birthname" className="form-label">Fecha de Nacimiento</label>
+          <label htmlFor="birthdate" className="form-label">Fecha de Nacimiento</label>
           <input
             type="date"
             className="form-control"
-            id="birthname"
-            name="birthname"
+            id="birthdate"
+            name="birthdate"
             value={formData.birthdate}
             onChange={handleChange}
             required
@@ -112,7 +113,7 @@ const Register = () => {
         <div className="mb-3">
           <label htmlFor="direction" className="form-label">Dirección</label>
           <input
-            type="date"
+            type="text"
             className="form-control"
             id="direction"
             name="direction"
@@ -122,7 +123,7 @@ const Register = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="direction" className="form-label">Telefono</label>
+          <label htmlFor="phone" className="form-label">Telefono</label>
           <input
             type="text"
             className="form-control"
