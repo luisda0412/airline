@@ -13,6 +13,8 @@ const Register = () => {
     direction: '',
     phone: ''
   });
+
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); // Hook para redirigir
 
   const handleChange = (e) => {
@@ -22,10 +24,22 @@ const Register = () => {
     });
   };
 
+  const validatePassword = (password) => {
+    // Expresión regular: mínimo 8 caracteres, al menos una letra mayúscula y un carácter especial
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validar la contraseña
+    if (!validatePassword(formData.password)) {
+      setErrorMessage('La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial.');
+      return;
+    }
+
     try {
-      debugger
       const response = await axios.post('http://localhost:3000/api/register', formData);
       console.log(response.data);
       navigate('/'); // Redirige al componente de inicio de sesión
@@ -37,6 +51,11 @@ const Register = () => {
   return (
     <div className="container">
       <h2>Register</h2>
+      {errorMessage && (
+        <div className="alert alert-danger" role="alert">
+          {errorMessage}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="username" className="form-label">Username</label>
