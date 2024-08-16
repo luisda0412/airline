@@ -1,12 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors'); // Importa el paquete CORS
+const cors = require('cors');
+const bcrypt = require('bcrypt'); // Para hashear contraseñas
 require('dotenv').config();
 
 const app = express();
 
 // Middleware para parsear JSON
-app.use(cors()); // Habilita CORS para todas las rutas
+app.use(cors()); 
 app.use(express.json());
 
 // Conectar a MongoDB
@@ -35,9 +36,21 @@ const User = mongoose.model('User', userSchema);
 app.post('/api/register', async (req, res) => {
   const { username, password, name, lastname, email, birthdate, direction, phone } = req.body;
 
-  const newUser = new User({ username, password, name, lastname, email, birthdate, direction, phone });
-
   try {
+    // Hashear la contraseña antes de guardarla
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      username,
+      password: hashedPassword, // Guardar la contraseña hasheada
+      name,
+      lastname,
+      email,
+      birthdate,
+      direction,
+      phone
+    });
+
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (error) {
@@ -45,6 +58,33 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+// Ruta para el login
+app.post('/api/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Buscar al usuario por el email
+    const user = await User.findOne({ email });
+    
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+    }
+
+    // Comparar la contraseña enviada con la almacenada en la base de datos
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ success: false, message: 'Contraseña incorrecta' });
+    }
+
+    // Si el login es exitoso
+    res.json({ success: true, message: 'Login exitoso', user: user._id }); // Aquí puedes devolver un token si es necesario
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error en el servidor' });
+  }
+});
+
+// Ruta principal
 app.get('/', (req, res) => {
   res.send('Hola');
 });

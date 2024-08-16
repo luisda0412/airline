@@ -5,13 +5,30 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Hook para redirigir
+  const [errorMessage, setErrorMessage] = useState(''); // Para mostrar errores
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Aquí puedes manejar la lógica de login, por ejemplo, haciendo una petición al backend
-    console.log('Email:', email);
-    console.log('Password:', password);
+    debugger
+    // Hacer petición al backend
+    const response = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      // Si el login es exitoso, redirige al componente deseado
+      navigate('/mainPage');
+    } else {
+      // Si el login falla, muestra el mensaje de error
+      setErrorMessage('Invalid email or password');
+    }
   };
 
   const handleRegisterRedirect = () => {
@@ -23,6 +40,11 @@ function Login() {
       <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
         <div className="card-body">
           <h2 className="card-title text-center mb-4">Login</h2>
+          {errorMessage && (
+            <div className="alert alert-danger" role="alert">
+              {errorMessage}
+            </div>
+          )}
           <form onSubmit={handleLogin}>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Email</label>
