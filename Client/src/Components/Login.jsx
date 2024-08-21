@@ -36,18 +36,18 @@ function Login() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
+    <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: '#f8f9fa' }}>
+      <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px', borderRadius: '15px', backgroundColor: '#e9ecef' }}>
         <div className="card-body">
-          <h2 className="card-title text-center mb-4">Login</h2>
+          <h2 className="card-title text-center mb-4" style={{ color: '#495057' }}>Login</h2>
           {errorMessage && (
-            <div className="alert alert-danger" role="alert">
+            <div className="alert alert-danger text-center" role="alert" style={{ borderRadius: '10px' }}>
               {errorMessage}
             </div>
           )}
           <form onSubmit={handleLogin}>
             <div className="mb-3">
-              <label htmlFor="email" className="form-label">Email</label>
+              <label htmlFor="email" className="form-label" style={{ color: '#343a40' }}>Email</label>
               <input
                 type="email"
                 className="form-control"
@@ -55,10 +55,11 @@ function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                style={{ borderRadius: '10px' }}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="password" className="form-label">Password</label>
+              <label htmlFor="password" className="form-label" style={{ color: '#343a40' }}>Password</label>
               <input
                 type="password"
                 className="form-control"
@@ -66,10 +67,13 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                style={{ borderRadius: '10px' }}
               />
             </div>
-            <button type="submit" className="btn btn-primary w-100 mb-2">Login</button>
-            <button type="button" className="btn btn-secondary w-100" onClick={handleRegisterRedirect}>
+            <button type="submit" className="btn btn-primary w-100 mb-2" style={{ backgroundColor: '#20c997', borderRadius: '10px', border: 'none' }}>
+              Login
+            </button>
+            <button type="button" className="btn btn-secondary w-100" onClick={handleRegisterRedirect} style={{ borderRadius: '10px' }}>
               Create an account
             </button>
           </form>
