@@ -4,6 +4,7 @@ import Login from './Components/Login.jsx';
 import Register from './Components/CreateAccount.jsx';
 import MainPage from './Components/MainPage.jsx';
 
+//ESTA FUNCION ES APRA NAVEGAR ENTRE COMPONENTES UTILIZANDO REACT-ROUTER-DOOM
 function App() {
   return (
     <Router>

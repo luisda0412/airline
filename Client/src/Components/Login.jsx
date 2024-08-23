@@ -11,7 +11,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     debugger
-    // Hacer petición al backend
+    //HACER LA PETICION AL BACKEND
     const response = await fetch('http://localhost:3000/api/login', {
       method: 'POST',
       headers: {

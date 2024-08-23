@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  //STATE CON LA INFORMACION DEL USUARIO
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -25,7 +26,7 @@ const Register = () => {
   };
 
   const validatePassword = (password) => {
-    // Expresión regular: mínimo 8 caracteres, al menos una letra mayúscula y un carácter especial
+    //EXPRESION QUE VALIDA QUE LA CLAVE TENGA MINIMO 8 LETRAS, 1 MAYUSCULA Y 1 CARACTER ESPECIAL
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
     return passwordRegex.test(password);
   };
@@ -33,7 +34,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validar la contraseña
+    //SE VALIDA LA CLAVE
     if (!validatePassword(formData.password)) {
       setErrorMessage('La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial.');
       return;

@@ -10,7 +10,7 @@ const app = express();
 app.use(cors()); 
 app.use(express.json());
 
-// Conectar a MongoDB
+//CONECTAR CON MONGODB, LA URI ESTA EN EL .ENV
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGO_URI, {
   .then(() => console.log('MongoDB conectado'))
   .catch((err) => console.error('Error al conectar a MongoDB', err));
 
-// Modelo de Usuario
+//MODELO DE USUARIO, CON LOS ATRIBUTOS DEL MISMO
 const userSchema = new mongoose.Schema({
   username: String,
   password: String,
@@ -30,19 +30,20 @@ const userSchema = new mongoose.Schema({
   phone: String
 });
 
+//PARA AGREGAR EL SCHEMA A MONGO
 const User = mongoose.model('User', userSchema);
 
-// Ruta para el registro
+//RUTA PARA REGISTRAR LOS USUARIOS
 app.post('/api/register', async (req, res) => {
   const { username, password, name, lastname, email, birthdate, direction, phone } = req.body;
 
   try {
-    // Hashear la contraseña antes de guardarla
+    //HASHEAR LA CLAVE MEDIANTE LA LIBRERIA BCRYPT
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
       username,
-      password: hashedPassword, // Guardar la contraseña hasheada
+      password: hashedPassword, //ACA SE GUARDA LA CLAVE HASHEADA
       name,
       lastname,
       email,
@@ -58,33 +59,33 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// Ruta para el login
+//RUTA PARA EL LOGIN
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Buscar al usuario por el email
+    //BUSCA AL USUARIO POR EL EMAIL
     const user = await User.findOne({ email });
     
     if (!user) {
       return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
     }
 
-    // Comparar la contraseña enviada con la almacenada en la base de datos
+    //COMPARA LA CLAVE ENVIADA CON LA ALMACENADA EN LA BASE DE DATOS
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(401).json({ success: false, message: 'Contraseña incorrecta' });
     }
 
-    // Si el login es exitoso
+    //SI EL LOGIN ES EXITOSO
     res.json({ success: true, message: 'Login exitoso', user: user._id }); // Aquí puedes devolver un token si es necesario
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error en el servidor' });
   }
 });
 
-// Ruta principal
+//RUTA PRINCIPAL
 app.get('/', (req, res) => {
   res.send('Hola');
 });
