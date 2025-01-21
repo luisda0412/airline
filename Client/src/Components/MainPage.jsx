@@ -1,4 +1,7 @@
 import React from 'react';
+import aaaaa from '../assets/images/aaaaa.png';
+import lmfao from '../assets/images/lmfao.jpg';
+
 
 const MainPage = () => {
   return (
@@ -7,14 +10,14 @@ const MainPage = () => {
       <div id="bannerSlider" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img src='../assets/images/aaaaa.png' className="d-block w-100" alt="Ruta con descuento 1" />
+          <img src={aaaaa} className="d-block w-100" alt="Ruta con descuento 1" />
             <div className="carousel-caption d-none d-md-block">
               <h5>Destino 1</h5>
               <p>Descripción del destino con descuento.</p>
             </div>
           </div>
           <div className="carousel-item">
-            <img src='../assets/images/lmfao.jpg' className="d-block w-100" alt="Ruta con descuento 2" />
+          <img src={lmfao} className="d-block w-100" alt="Ruta con descuento 2" />
             <div className="carousel-caption d-none d-md-block">
               <h5>Destino 2</h5>
               <p>Otra descripción para este destino.</p>
