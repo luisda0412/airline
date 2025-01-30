@@ -30,8 +30,19 @@ const userSchema = new mongoose.Schema({
   phone: String
 });
 
+const planeSchema = new mongoose.Schema({
+  id: String,
+  year: Number,
+  model: String,
+  brand: String,
+  passagerAmount: Number,
+  rowAmount: Number,
+  seatAmount: Number
+});
+
 //PARA AGREGAR EL SCHEMA A MONGO
 const User = mongoose.model('User', userSchema);
+const Plane = mongoose.model('Plane', planeSchema);
 
 //RUTA PARA REGISTRAR LOS USUARIOS
 app.post('/api/register', async (req, res) => {
@@ -54,6 +65,28 @@ app.post('/api/register', async (req, res) => {
 
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
+  } catch (error) {
+    res.status(500).json({ error: 'Error registrando usuario' });
+  }
+});
+
+app.post('/api/registerPlane', async (req, res) => {
+  const { id, year, model, brand, passagerAmount, rowAmount, seatAmount } = req.body;
+
+  try {
+  
+    const newPlane = new Plane({
+      id,
+      year,
+      model,
+      brand,
+      passagerAmount,
+      rowAmount,
+      seatAmount
+    });
+
+    const savedPlane = await newPlane.save();
+    res.status(201).json(savedPlane);
   } catch (error) {
     res.status(500).json({ error: 'Error registrando usuario' });
   }
