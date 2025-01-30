@@ -40,9 +40,16 @@ const planeSchema = new mongoose.Schema({
   seatAmount: Number
 });
 
+const routeSchema = new mongoose.Schema({
+  id: String,
+  route: String,
+  duration: String
+});
+
 //PARA AGREGAR EL SCHEMA A MONGO
 const User = mongoose.model('User', userSchema);
 const Plane = mongoose.model('Plane', planeSchema);
+const Route = mongoose.model('Route', routeSchema);
 
 //RUTA PARA REGISTRAR LOS USUARIOS
 app.post('/api/register', async (req, res) => {
@@ -66,7 +73,7 @@ app.post('/api/register', async (req, res) => {
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (error) {
-    res.status(500).json({ error: 'Error registrando usuario' });
+    res.status(500).json({ error: 'Error creating user' });
   }
 });
 
@@ -88,7 +95,25 @@ app.post('/api/registerPlane', async (req, res) => {
     const savedPlane = await newPlane.save();
     res.status(201).json(savedPlane);
   } catch (error) {
-    res.status(500).json({ error: 'Error registrando usuario' });
+    res.status(500).json({ error: 'Error creating plane' });
+  }
+});
+
+app.post('/api/registerRoute', async (req, res) => {
+  const { id, route, duration} = req.body;
+
+  try {
+  
+    const newRoute = new Route({
+      id,
+      route,
+      duration
+    });
+
+    const savedRoute = await newRoute.save();
+    res.status(201).json(savedRoute);
+  } catch (error) {
+    res.status(500).json({ error: 'Error creating rute' });
   }
 });
 

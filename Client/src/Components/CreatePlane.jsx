@@ -78,7 +78,7 @@ const CreatePlane = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="brand" className="form-label" style={{ color: '#343a40' }}>Model</label>
+                <label htmlFor="model" className="form-label" style={{ color: '#343a40' }}>Model</label>
                 <input
                   type="text"
                   className="form-control"
